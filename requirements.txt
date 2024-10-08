@@ -5,3 +5,4 @@ yfinance
 python_dateutil
 gunicorn
 numpy_financial
+matplotlib
