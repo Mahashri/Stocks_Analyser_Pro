@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahashri Stock Symbols Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f4f4f4, #ececec);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #1abc9c, #8e44ad,#f24484, #e74c3c);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+            background-size: 300%;
+            animation: gradientMove 8s infinite;
+            transition: transform 0.3s ease-in-out, letter-spacing 0.3s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #0066cc;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            animation: fadeIn 1.2s ease-in-out forwards;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plot-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .plot {
+            border: 1px solid #ddd;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .no-data {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Slide button styling */
+        .slide-button {
+            position: relative;
+            width: 300px;
+            height: 50px;
+            background-color: #ddd;
+            border-radius: 25px;
+            margin: 20px auto;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .swipe-icon {
+            position: absolute;
+            left: 10px;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .swipe-icon i {
+            margin-right: 5px;
+        }
+
+        /* Image container */
+        .images-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Keyframes for animations */
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile view specific changes */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .plot-container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .plot {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden; /* Ensure no horizontal scrolling */
+                box-sizing: border-box; /* Include padding in width */
+            }
+
+            img {
+                width: 100%; /* Ensure the images scale to fit the container */
+                height: auto; /* Maintain aspect ratio */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Mahashri Stocks Dashboard!</h1>
+
+        <div class="plot-container favourite-stocks-container">
+            <div class="plot">
+                <h2>My Favourite Stocks</h2>
+                {% if main_plot_url %}
+                    <img src="data:image/png;base64,{{ main_plot_url }}" alt="Main Stocks Plot">
+                {% else %}
+                    <p class="no-data">⚠️ No data available for main stocks.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Slide button to reveal images -->
+        <div class="slide-button" id="slideButton">
+            <div class="swipe-icon" id="swipeIcon">
+                <i class="fas fa-hand-point-right"></i> Swipe to view more Stocks
+            </div>
+        </div>
+
+        <!-- Images container -->
+        <div class="images-container" id="imagesContainer">
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Railway Stocks</h2>
+                    {% if railway_plot_url %}
+                        <img src="data:image/png;base64,{{ railway_plot_url }}" alt="Railway Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for railway stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Defence Stocks</h2>
+                    {% if defence_plot_url %}
+                        <img src="data:image/png;base64,{{ defence_plot_url }}" alt="Defence Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for defence stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Gold & Finance Stocks</h2>
+                    {% if gold_finance_plot_url %}
+                        <img src="data:image/png;base64,{{ gold_finance_plot_url }}" alt="Gold & Finance Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for Gold & Finance stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Power & Cement Stocks</h2>
+                    {% if power_cement_plot_url %}
+                        <img src="data:image/png;base64,{{ power_cement_plot_url }}" alt="Power & Cement Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for Power & Cement stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Nifty 50 Stocks</h2>
+                    {% if nifty_plot_url %}
+                        <img src="data:image/png;base64,{{ nifty_plot_url }}" alt="Nifty 50 Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for Nifty stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="plot-container">
+                <div class="plot">
+                    <h2>Bank Stocks</h2>
+                    {% if bank_plot_url %}
+                        <img src="data:image/png;base64,{{ bank_plot_url }}" alt="Bank Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for bank stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slideButton = document.getElementById('slideButton');
+        const swipeIcon = document.getElementById('swipeIcon');
+        const imagesContainer = document.getElementById('imagesContainer');
+
+        let isImagesVisible = false;
+
+        slideButton.addEventListener('click', () => {
+            if (!isImagesVisible) {
+                imagesContainer.style.display = 'flex'; // Show images
+                swipeIcon.style.transform = 'translateX(250px)'; // Move icon to the right
+                isImagesVisible = true;
+            } else {
+                imagesContainer.style.display = 'none'; // Hide images
+                swipeIcon.style.transform = 'translateX(0)'; // Move icon back to the left
+                isImagesVisible = false;
+            }
+        });
+    </script>
+</body>
+</html>
