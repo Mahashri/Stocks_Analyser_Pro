@@ -247,8 +247,55 @@
                     {% endif %}
                 </div>
             </div>
+			
+			
+			
+			<div class="plot-container">
+                <div class="plot">
+                    <h2>American (US) Stocks</h2>
+                    {% if american_plot_url %}
+                        <img src="data:image/png;base64,{{ american_plot_url }}" alt="American Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for American stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         const slideButton = document.getElementById('slideButton');
