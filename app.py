@@ -75,10 +75,10 @@ def index():
 
     
     
-    nifty_stocks =['APOLLOHOSP.NS', 'INDUSINDBK.NS', 'HEROMOTOCO.NS', 'DRREDDY.NS', 'TATACONSUM.NS', 'SHRIRAMFIN.NS', 'EICHERMOT.NS', 'CIPLA.NS', 'BPCL.NS', 'BRITANNIA.NS', 'HDFCLIFE.NS', 'TECHM.NS', 'HINDALCO.NS', 'SBILIFE.NS', 'GRASIM.NS', 'BEL.NS', 'TATASTEEL.NS', 'NESTLEIND.NS', 'JSWSTEEL.NS', 'TRENT.NS', 'WIPRO.NS', 'ASIANPAINT.NS', 'BAJAJFINSV.NS', 'ADANIPORTS.NS', 'COALINDIA.NS', 'POWERGRID.NS', 'TITAN.NS', 'BAJAJ-AUTO.NS', 'ULTRACEMCO.NS', 'TATAMOTORS.NS', 'ADANIENT.NS', 'KOTAKBANK.NS', 'AXISBANK.NS', 'ONGC.NS', 'M&M.NS', 'MARUTI.NS', 'NTPC.NS', 'BAJFINANCE.NS', 'SUNPHARMA.NS', 'LT.NS', 'HCLTECH.NS', 'ITC.NS', 'HINDUNILVR.NS', 'SBIN.NS', 'INFY.NS', 'ICICIBANK.NS', 'BHARTIARTL.NS', 'HDFCBANK.NS', 'TCS.NS', 'RELIANCE.NS'
-]
+    nifty_stocks =['APOLLOHOSP.NS', 'INDUSINDBK.NS', 'HEROMOTOCO.NS', 'DRREDDY.NS', 'TATACONSUM.NS', 'SHRIRAMFIN.NS', 'EICHERMOT.NS', 'CIPLA.NS', 'BPCL.NS', 'BRITANNIA.NS', 'HDFCLIFE.NS', 'TECHM.NS', 'HINDALCO.NS', 'SBILIFE.NS', 'GRASIM.NS', 'BEL.NS', 'TATASTEEL.NS', 'NESTLEIND.NS', 'JSWSTEEL.NS', 'TRENT.NS', 'WIPRO.NS', 'ASIANPAINT.NS', 'BAJAJFINSV.NS', 'ADANIPORTS.NS', 'COALINDIA.NS', 'POWERGRID.NS', 'TITAN.NS', 'BAJAJ-AUTO.NS', 'ULTRACEMCO.NS', 'TATAMOTORS.NS', 'ADANIENT.NS', 'KOTAKBANK.NS', 'AXISBANK.NS', 'ONGC.NS', 'M&M.NS', 'MARUTI.NS', 'NTPC.NS', 'BAJFINANCE.NS', 'SUNPHARMA.NS', 'LT.NS', 'HCLTECH.NS', 'ITC.NS', 'HINDUNILVR.NS', 'SBIN.NS', 'INFY.NS', 'ICICIBANK.NS', 'BHARTIARTL.NS', 'HDFCBANK.NS', 'TCS.NS', 'RELIANCE.NS']
+
     
-    
+    american_stocks =['AXP','WMT','AVGO','GIB','IBM','ACN','BAC', 'NVDA', 'HPQ', 'META', 'AMZN', 'GOOG', 'MSFT', 'DELL','JPM', 'BRK-B', 'COKE', 'TM', 'AAPL']
     
     
     # Helper function to fetch stock data
@@ -138,10 +138,16 @@ def index():
             else:
                 price_position = bar_start
 
+             # Change the price symbol based on stock origin
+            if valid_stocks[i] in american_stocks:
+                price_symbol = '$'
+            else:
+                price_symbol = '₹'
+            
             ax.annotate('▲', xy=(price_position, i), fontsize=15, color='green', ha='center', va='center', fontweight='bold')
-            ax.text(price_position, i + 0.20, f'₹{current_price[i]:.2f}', va='center', ha='center', color='black', fontweight='bold')
-            ax.text(bar_start + 5, i - 0.30, f'L ₹{low_52w[i]:.2f}', va='center', ha='right', fontsize=10, color='black')
-            ax.text(bar_end, i - 0.30, f'H ₹{high_52w[i]:.2f}', va='center', ha='left', fontsize=10, color='black')
+            ax.text(price_position, i + 0.20, f'{price_symbol}{current_price[i]:.2f}', va='center', ha='center', color='black', fontweight='bold')
+            ax.text(bar_start + 5, i - 0.30, f'L {price_symbol}{low_52w[i]:.2f}', va='center', ha='right', fontsize=10, color='black')
+            ax.text(bar_end, i - 0.30, f'H {price_symbol}{high_52w[i]:.2f}', va='center', ha='left', fontsize=10, color='black')
 
         ax.set_yticks(y)
         ax.set_yticklabels(company_names, fontweight='bold')
@@ -236,7 +242,15 @@ def index():
     else:
         nifty_plot_url = create_plot(nifty_company_names, nifty_stock_data, valid_nifty_stocks)
 
-
+# Fetch stock data for american stocks
+    american_company_names, american_stock_data = fetch_stock_data(american_stocks)
+    valid_american_stocks = [stock for stock in american_stocks if stock in american_stock_data]
+    
+    # Check if valid_american_stocks is empty
+    if not valid_american_stocks:
+        american_plot_url = None
+    else:
+        american_plot_url = create_plot(american_company_names, american_stock_data, valid_american_stocks)
 
 
 
@@ -251,7 +265,8 @@ def index():
                            defence_plot_url=defence_plot_url,
                            gold_finance_plot_url=gold_finance_plot_url,
                            power_cement_plot_url=power_cement_plot_url,
-                           nifty_plot_url=nifty_plot_url)
+                           nifty_plot_url=nifty_plot_url,
+                           american_plot_url=american_plot_url)
 
 
 
