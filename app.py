@@ -73,6 +73,10 @@ def index():
     'HINDZINC.NS', 'ADANIPOWER.NS', 'TATAPOWER.NS', 'TATAPOWER.NS', 'JSWENERGY.NS', 'RECLTD.NS', 'PFC.NS','NTPC.NS', 'POWERGRID.NS']
 
 
+
+    fmcg_amc_stocks =[ 'RADICO.NS', 'MARICO.NS', 'COLPAL.NS', 'TATACONSUM.NS', 'BRITANNIA.NS', 'HINDUNILVR.NS', 'VBL.NS', 'NESTLEIND.NS', 'ITC.NS','VHL.NS','JSWHL.NS','BAJAJHLDNG.NS','UTIAMC.NS', 'ABSLAMC.NS', 'NAM-INDIA.NS', 'HDFCAMC.NS']
+
+
     
     
     nifty_stocks =['APOLLOHOSP.NS', 'INDUSINDBK.NS', 'HEROMOTOCO.NS', 'DRREDDY.NS', 'TATACONSUM.NS', 'SHRIRAMFIN.NS', 'EICHERMOT.NS', 'CIPLA.NS', 'BPCL.NS', 'BRITANNIA.NS', 'HDFCLIFE.NS', 'TECHM.NS', 'HINDALCO.NS', 'SBILIFE.NS', 'GRASIM.NS', 'BEL.NS', 'TATASTEEL.NS', 'NESTLEIND.NS', 'JSWSTEEL.NS', 'TRENT.NS', 'WIPRO.NS', 'ASIANPAINT.NS', 'BAJAJFINSV.NS', 'ADANIPORTS.NS', 'COALINDIA.NS', 'POWERGRID.NS', 'TITAN.NS', 'BAJAJ-AUTO.NS', 'ULTRACEMCO.NS', 'TATAMOTORS.NS', 'ADANIENT.NS', 'KOTAKBANK.NS', 'AXISBANK.NS', 'ONGC.NS', 'M&M.NS', 'MARUTI.NS', 'NTPC.NS', 'BAJFINANCE.NS', 'SUNPHARMA.NS', 'LT.NS', 'HCLTECH.NS', 'ITC.NS', 'HINDUNILVR.NS', 'SBIN.NS', 'INFY.NS', 'ICICIBANK.NS', 'BHARTIARTL.NS', 'HDFCBANK.NS', 'TCS.NS', 'RELIANCE.NS']
@@ -208,6 +212,20 @@ def index():
         defence_plot_url = None
     else:
         defence_plot_url = create_plot(defence_company_names, defence_stock_data, valid_defence_stocks)
+
+
+#fmcg_amc
+ # Fetch stock data for fmcg_amc stocks
+    fmcg_amc_company_names, fmcg_amc_stock_data = fetch_stock_data(fmcg_amc_stocks)
+    valid_fmcg_amc_stocks = [stock for stock in fmcg_amc_stocks if stock in fmcg_amc_stock_data]
+    
+    # Check if valid_fmcg_amc_stocks is empty
+    if not valid_fmcg_amc_stocks:
+        fmcg_amc_plot_url = None
+    else:
+        fmcg_amc_plot_url = create_plot(fmcg_amc_company_names, fmcg_amc_stock_data, valid_fmcg_amc_stocks)
+
+
         
 #gold&finance
  # Fetch stock data for gold&finance stocks
@@ -266,14 +284,8 @@ def index():
                            gold_finance_plot_url=gold_finance_plot_url,
                            power_cement_plot_url=power_cement_plot_url,
                            nifty_plot_url=nifty_plot_url,
-                           american_plot_url=american_plot_url)
-
-
-
-
-
-
-
+                           american_plot_url=american_plot_url,
+						   fmcg_amc_plot_url=fmcg_amc_plot_url)
 
 
 
