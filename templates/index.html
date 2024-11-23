@@ -225,6 +225,23 @@
                     {% endif %}
                 </div>
             </div>
+			
+			
+			
+			<div class="plot-container">
+                <div class="plot">
+                    <h2>FMCG & AMC Stocks</h2>
+                    {% if fmcg_amc_plot_url %}
+                        <img src="data:image/png;base64,{{ fmcg_amc_plot_url }}" alt="FMCG & AMC Stocks Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for FMCG & AMC stocks.</p>
+                    {% endif %}
+                </div>
+            </div>
+			
+			
+			
+			
 
             <div class="plot-container">
                 <div class="plot">
@@ -261,7 +278,21 @@
                 </div>
             </div>
 			
+			<div class="plot-container">
+                <div class="plot">
+                    <h2>Gold</h2>
+                    {% if gold_plot_url %}
+                        <img src="data:image/png;base64,{{ gold_plot_url }}" alt="Gold Plot">
+                    {% else %}
+                        <p class="no-data">⚠️ No data available for Gold.</p>
+                    {% endif %}
+                </div>
+            </div>
 			
+			
+			
+			
+
 			
 			
 			
