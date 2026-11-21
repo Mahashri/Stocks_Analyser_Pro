@@ -40,3 +40,10 @@ The current source performs many sequential yfinance requests during a page requ
 
 ## Disclaimer
 Quotes may be delayed, incomplete or unavailable. This project is not investment advice.
+
+
+---
+
+## Live Demo
+
+[Open the deployed application](https://stocks-analyser-pro.vercel.app/)
